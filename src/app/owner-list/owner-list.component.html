@@ -1,0 +1,57 @@
+<div>
+  <h1 mat-line>Owner List</h1>
+    <table mat-table [dataSource]="owners" class="mat-elevation-z8">
+      <ng-container matColumnDef="dni">
+        <th mat-header-cell *matHeaderCellDef class="list-item"> DNI </th>
+        <td mat-cell *matCellDef="let owner" class="list-item"> {{owner.dni}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="list-item"> Name </th>
+        <td mat-cell *matCellDef="let owner" class="list-item"> {{owner.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="profession">
+        <th mat-header-cell *matHeaderCellDef class="list-item"> Profession </th>
+        <td mat-cell *matCellDef="let owner" class="list-item"> {{owner.profession}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="list-item"> Actions </th>
+        <td mat-cell *matCellDef="let owner" class="actions-buttons">
+          <button mat-fab color="primary" [routerLink]="['/owner-add']">Edit</button>
+          <mat-checkbox
+            [checked]="allComplete"
+            [indeterminate]="someComplete()"
+            (change)="setAll($event.checked)"
+          > Remove </mat-checkbox>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+    </table>
+  <!--<mat-list>
+    <mat-list-item *ngFor="let owner of owners">
+      <a mat-button [routerLink]="['/owner-edit', owner.id]">
+        <mat-card>
+            <mat-card-title>{{owner.name}}</mat-card-title>
+            <mat-card-content>
+              <mat-grid-list cols="2" rowHeight="2:1">
+                <mat-grid-tile>
+                  <h4 mat-line>Profession</h4>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <h4 mat-line>{{owner.profession}}</h4>
+                </mat-grid-tile>
+                <mat-grid-tile>3</mat-grid-tile>
+                <mat-grid-tile>4</mat-grid-tile>
+              </mat-grid-list>
+            </mat-card-content>
+
+        </mat-card>
+      </a>
+    </mat-list-item>
+  </mat-list>-->
+  <button mat-fab color="primary" [routerLink]="['/owner-add']">Add</button>
+</div>
