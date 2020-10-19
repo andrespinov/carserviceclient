@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class OwnerService {
@@ -30,5 +30,9 @@ export class OwnerService {
 
   remove(href: string) {
     return this.http.delete(href);
+  }
+
+  removeMultiple(hrefs: Array<string>) {
+    return forkJoin(hrefs.map(href => this.remove(href)))
   }
 }
