@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class CarService {
@@ -26,6 +26,10 @@ export class CarService {
       result = this.http.post(this.CAR_API, car);
     }
     return result;
+  }
+
+  removeCarsOwners(cars: Array<any>): Observable<any> {
+    return forkJoin(cars.map(({ href }) => this.save({ href, ownerDni: '' })))
   }
 
   remove(href: string) {

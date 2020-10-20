@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GiphyService } from '../shared/giphy/giphy.service';
 import { NgForm } from '@angular/forms';
 import { OwnerService } from '../shared/owner/owner.service';
+import { CarService } from '../shared/car/car.service';
 
 @Component({
   selector: 'app-owner-edit',
@@ -18,7 +19,8 @@ export class OwnerEditComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private ownerService: OwnerService
+    private ownerService: OwnerService,
+    private carService: CarService
   ) {}
 
   ngOnInit() {
@@ -53,9 +55,16 @@ export class OwnerEditComponent implements OnInit, OnDestroy {
   }
 
   remove(href) {
-    this.ownerService.remove(href).subscribe(result => {
-      this.gotoList();
-    }, error => console.error(error));
+    this.carService.getAll().subscribe(data => {
+      const cars = data;
+      const carsWithCurrentOwner = cars.filter((car: any) => this.owner.dni === car.ownerDni);
+      this.ownerService.remove(href).subscribe(result => {
+        if (carsWithCurrentOwner.length) {
+          this.carService.removeCarsOwners(carsWithCurrentOwner).subscribe(() => {}, error => console.error(error))
+        }
+        this.gotoList();
+      }, error => console.error(error));
+    })
   }
 }
 

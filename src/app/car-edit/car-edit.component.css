@@ -1,3 +1,8 @@
 .giphy {
-    margin: 10px;
-  }
+  margin: 10px;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: column;
+}
