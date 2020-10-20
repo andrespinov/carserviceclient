@@ -1,27 +1,14 @@
-# CarServiceClient
+# CarServiceClient por Andrés Pino Vallejo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
+Para llegar a la solución se crearon los siguientes componentes y servicios:
 
-## Development server
+## Owner service
+Es el servicio encargado de proveer los observables para todas las peticiones relacionadas al propietario: obtenerlos todos, obtener por id, crear, actualizar y borrar. También se creó un observable para eliminar varios propietarios a la vez usando el forkJoin de rxjs, el cual permite ejecutar multiples observables asincronamente y esperar a que todos sea resueltos.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Owner List Component
+Es el componente de la lista de propietarios. Como el propietairo tiene varios datos, se despliega la información en una lista para que sea mejor visualizada. Allí se le añadió un checkbox a cada propietario de la lista para poder eliminar multiples propietarios a la vez. También tienen un botón para dirigirse a editar cada propietario o para agregar uno nuevo.
 
-## Code scaffolding
+Para ésto se utilizaron los componentes Mat-table y Mat-checkbox de Angular Material.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Owner Edit Component
+Es el componente que permite editar un propietario existente o crear uno nuevo. Con un parámetro a través de la url se obtiene el id del propietario para obtenerlo a través del servicio y poder editarlo. El único campo que se añadió como obligatorio fue el DNI.
