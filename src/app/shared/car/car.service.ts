@@ -28,10 +28,6 @@ export class CarService {
     return result;
   }
 
-  removeCarsOwners(cars: Array<any>): Observable<any> {
-    return forkJoin(cars.map(({ href }) => this.save({ href, ownerDni: '' })))
-  }
-
   remove(href: string) {
     return this.http.delete(href);
   }
