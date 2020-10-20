@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CarService } from '../shared/car/car.service';
 import { OwnerService } from '../shared/owner/owner.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class OwnerListComponent implements OnInit {
 
   constructor(
     private ownerService: OwnerService,
-    private carService: CarService,
     private router: Router
   ) { }
 
@@ -44,17 +42,10 @@ export class OwnerListComponent implements OnInit {
   }
 
   deleteCheckedOwners() {
-    this.carService.getAll().subscribe(data => {
-      const cars = data;
-      const carsWithSelectedOwners = cars.filter((car: any) => this.checkedOwners.filter((owner: any) => owner.dni === car.ownerDni).length > 0);
-      this.ownerService.removeMultiple(this.checkedOwners.map(owner => owner.href)).subscribe(result => {
-        if (carsWithSelectedOwners.length) {
-          this.carService.removeCarsOwners(carsWithSelectedOwners).subscribe(() => {}, error => console.error(error))
-        }
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['/owner-list']);
-      }, error => console.error(error));
-    });
+    this.ownerService.removeMultiple(this.checkedOwners.map(owner => owner.href)).subscribe(result => {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate(['/owner-list']);
+    }, error => console.error(error));
   }
 }

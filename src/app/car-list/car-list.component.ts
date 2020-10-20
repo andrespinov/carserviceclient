@@ -25,7 +25,7 @@ export class CarListComponent implements OnInit {
         for (const car of this.cars) {
           this.giphyService.get(car.name).subscribe(url => car.giphyUrl = url);
           const owner = owners.filter(owner => owner.dni === car.ownerDni);
-          car.ownerName = owner ? owner.name : '';
+          car.ownerName = owner.length ? owner[0].name : '';
         };
       });
     })
